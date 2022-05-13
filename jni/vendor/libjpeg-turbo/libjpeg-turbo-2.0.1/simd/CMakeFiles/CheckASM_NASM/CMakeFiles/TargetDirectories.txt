@@ -1,0 +1,2 @@
+/opt/Workspace/TypeScript/007/DeviceFarmer/android-libjpeg-turbo/jni/vendor/libjpeg-turbo/libjpeg-turbo-2.0.1/simd/CMakeFiles/CheckASM_NASM/CMakeFiles/edit_cache.dir
+/opt/Workspace/TypeScript/007/DeviceFarmer/android-libjpeg-turbo/jni/vendor/libjpeg-turbo/libjpeg-turbo-2.0.1/simd/CMakeFiles/CheckASM_NASM/CMakeFiles/rebuild_cache.dir

@@ -23,7 +23,7 @@ foreach(src ${JPEG_SOURCES})
   set(JPEG_SRCS ${JPEG_SRCS} ../${src})
 endforeach()
 
-if(WITH_SIMD AND MSVC_IDE)
+if(WITH_SIMD AND (MSVC_IDE OR XCODE))
   # This tells CMake that the "source" files haven't been generated yet
   set_source_files_properties(${SIMD_OBJS} PROPERTIES GENERATED 1)
 endif()
@@ -34,6 +34,11 @@ if(WIN32)
   else()
     set(DEFFILE ../win/jpeg${SO_MAJOR_VERSION}.def)
   endif()
+endif()
+if(MSVC)
+  configure_file(${CMAKE_SOURCE_DIR}/win/jpeg.rc.in
+    ${CMAKE_BINARY_DIR}/win/jpeg.rc)
+  set(JPEG_SRCS ${JPEG_SRCS} ${CMAKE_BINARY_DIR}/win/jpeg.rc)
 endif()
 add_library(jpeg SHARED ${JPEG_SRCS} ${DEFFILE} $<TARGET_OBJECTS:simd>
   ${SIMD_OBJS})
@@ -52,7 +57,8 @@ if(MAPFLAG)
     LINK_FLAGS "${MAPFLAG}${CMAKE_CURRENT_BINARY_DIR}/../libjpeg.map")
 endif()
 if(MSVC)
-  set_target_properties(jpeg PROPERTIES SUFFIX ${SO_MAJOR_VERSION}.dll)
+  set_target_properties(jpeg PROPERTIES
+    RUNTIME_OUTPUT_NAME jpeg${SO_MAJOR_VERSION})
   # The jsimd_*.c file is built using /MT, so this prevents a linker warning.
   set_target_properties(jpeg PROPERTIES LINK_FLAGS "/NODEFAULTLIB:LIBCMT /NODEFAULTLIB:LIBCMTD")
 elseif(MINGW)
@@ -87,7 +93,15 @@ set_property(TARGET jpegtran PROPERTY COMPILE_FLAGS "${USE_SETMODE}")
 add_executable(jcstest ../jcstest.c)
 target_link_libraries(jcstest jpeg)
 
-install(TARGETS jpeg cjpeg djpeg jpegtran
+install(TARGETS jpeg EXPORT ${CMAKE_PROJECT_NAME}Targets
+  INCLUDES DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}
   ARCHIVE DESTINATION ${CMAKE_INSTALL_LIBDIR}
   LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
   RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR})
+install(TARGETS cjpeg djpeg jpegtran
+  RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR})
+if(NOT CMAKE_VERSION VERSION_LESS "3.1" AND MSVC AND
+  CMAKE_C_LINKER_SUPPORTS_PDB)
+  install(FILES "$<TARGET_PDB_FILE:jpeg>"
+    DESTINATION ${CMAKE_INSTALL_BINDIR} OPTIONAL)
+endif()

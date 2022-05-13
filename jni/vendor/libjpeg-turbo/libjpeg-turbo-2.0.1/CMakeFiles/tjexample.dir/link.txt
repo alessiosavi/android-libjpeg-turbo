@@ -1,0 +1,1 @@
+/usr/bin/cc -O3 -DNDEBUG CMakeFiles/tjexample.dir/tjexample.c.o -o tjexample  -Wl,-rpath,/opt/Workspace/TypeScript/007/DeviceFarmer/android-libjpeg-turbo/jni/vendor/libjpeg-turbo/libjpeg-turbo-2.0.1 libturbojpeg.so.0.2.0 
