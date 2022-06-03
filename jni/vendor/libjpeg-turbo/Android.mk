@@ -3,7 +3,7 @@ include $(CLEAR_VARS)
 
 LOCAL_MODULE := libjpeg-turbo
 
-SOURCE_PATH := libjpeg-turbo-2.0.1
+SOURCE_PATH := libjpeg-turbo-2.0.7
 
 ifneq ($(filter $(TARGET_ARCH_ABI), armeabi-v7a armeabi-v7a-hard x86),)
 LOCAL_ARM_NEON := true
@@ -203,8 +203,8 @@ LOCAL_EXPORT_C_INCLUDES := \
 LOCAL_CFLAGS += \
 	-DBUILD="\"20181112\"" \
 	-DPACKAGE_NAME="\"libjpeg-turbo\"" \
-	-DVERSION="\"2.0.1\"" \
-	-DLIBJPEG_TURBO_VERSION="2.0.1" \
+	-DVERSION="\"2.0.7\"" \
+	-DLIBJPEG_TURBO_VERSION="2.0.7" \
 	-DJPEG_LIB_VERSION=62 \
 	-DC_ARITH_CODING_SUPPORTED=1 \
 	-DD_ARITH_CODING_SUPPORTED=1 \

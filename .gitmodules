@@ -1,0 +1,3 @@
+[submodule "jni/vendor/libjpeg-turbo/libjpeg-turbo-2.0.7"]
+	path = jni/vendor/libjpeg-turbo/libjpeg-turbo-2.0.7
+	url = https://github.com/alessiosavi/libjpeg-turbo-mirror.git
